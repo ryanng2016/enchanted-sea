@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #e9e9e9;
   --foreground: #171717;
 }
 
@@ -10,6 +10,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-monsieur);
+  --font-roboto: var(--font-roboto);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +24,195 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ========================================
+   Slow star
+======================================== */
+
+@keyframes slow-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-slow-spin {
+  animation: slow-spin 11s linear infinite;
+}
+
+/* ========================================
+   Water-like subtle wave animation
+======================================== */
+
+.wave-water {
+  /* Soft watery color field + highlights */
+  background:
+    radial-gradient(1200px 220px at 50% 110%,
+      rgba(59,130,246,0.42),
+      rgba(59,130,246,0) 70%),
+    radial-gradient(900px 180px at 20% 120%,
+      rgba(147,197,253,0.20),
+      rgba(147,197,253,0) 70%),
+    radial-gradient(900px 180px at 80% 120%,
+      rgba(147,197,253,0.16),
+      rgba(147,197,253,0) 70%),
+    linear-gradient(to top,
+      rgba(59,130,246,0.18),
+      rgba(59,130,246,0) 60%);
+
+  /* This is the “wave edge” silhouette */
+  -webkit-mask-image: radial-gradient(60px 18px at 0% 55%, #000 62%, transparent 64%);
+  mask-image: radial-gradient(60px 18px at 0% 55%, #000 62%, transparent 64%);
+  -webkit-mask-size: 120px 80px;
+  mask-size: 120px 80px;
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+
+  filter: blur(14px);
+  transform: translate3d(0, 0, 0);
+  will-change: background-position, transform;
+}
+
+/* Back layer: slower + larger feel */
+.wave-water--back {
+  filter: blur(18px);
+  -webkit-mask-size: 160px 90px;
+  mask-size: 160px 90px;
+
+  animation: waterDriftBack 18s ease-in-out infinite;
+}
+
+/* Front layer: slightly sharper + faster */
+.wave-water--front {
+  filter: blur(9px);
+  -webkit-mask-size: 120px 78px;
+  mask-size: 120px 78px;
+
+  animation: waterDriftFront 12s ease-in-out infinite;
+}
+
+@keyframes waterDriftBack {
+  0% {
+    background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px;
+    transform: translateY(0px);
+  }
+  50% {
+    background-position: 140px 0px, 60px 0px, -60px 0px, 0px 0px;
+    transform: translateY(-10px);
+  }
+  100% {
+    background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes waterDriftFront {
+  0% {
+    background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px;
+    transform: translateY(0px);
+  }
+  50% {
+    background-position: 220px 0px, 110px 0px, -110px 0px, 0px 0px;
+    transform: translateY(-14px);
+  }
+  100% {
+    background-position: 0px 0px, 0px 0px, 0px 0px, 0px 0px;
+    transform: translateY(0px);
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .wave-water--back,
+  .wave-water--front {
+    animation: none;
+  }
+}
+
+/* Hide native cursor only on devices that actually have a mouse */
+@media (hover: hover) and (pointer: fine) {
+  html, body {
+    cursor: none;
+  }
+}
+
+/* Keep normal cursor for touch devices */
+@media (hover: none), (pointer: coarse) {
+  html, body {
+    cursor: auto;
+  }
+}
+
+@keyframes softRipple {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(8.5);
+    opacity: 0;
+  }
+}
+
+/* Hide native cursor on real mouse devices */
+@media (hover: hover) and (pointer: fine) {
+
+  html,
+  body,
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  summary,
+  [role="button"] {
+    cursor: none !important;
+  }
+
+}
+
+/* --- 3D Z-Plane Grid --- */
+.zgrid-plane {
+  position: absolute;
+  left: 50%;
+  bottom: -12vh;
+  width: 220vw;
+  height: 140vh;
+
+  transform: translateX(-50%) rotateX(72deg);
+  transform-origin: bottom center;
+
+  background-image:
+    linear-gradient(rgba(37,99,235,0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37,99,235,0.22) 1px, transparent 1px);
+
+  background-size: 150px 150px;
+  background-position: 0 0, 0 0;
+
+  /* fade into the distance */
+  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
+  mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
+
+  animation: zgridMove 22s linear infinite;
+}
+
+@keyframes zgridMove {
+  from { background-position: 0 0, 0 0; }
+  to   { background-position: 0 240px, 240px 0; }
+}
+
+/* Hide scrollbar but keep scroll */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE/Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+}
+.no-scrollbar::-webkit-scrollbar-thumb {
+  background: transparent !important;
+}
+.no-scrollbar::-webkit-scrollbar-track {
+  background: transparent !important;
 }
