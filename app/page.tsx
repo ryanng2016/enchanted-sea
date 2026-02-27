@@ -81,9 +81,11 @@ export default function Home() {
   return (
     <main className="relative h-screen bg-[#F9F7F6] overflow-x-visible overflow-y-hidden px-6">
       {/* 3D Grid (above waves, below content) */}
+      {/*
       <div className="pointer-events-none absolute inset-0 z-[5] overflow-hidden [perspective:1200px]">
         <div className="zgrid-plane" />
       </div>
+      */}
 
       {/* NAV (stays fixed) */}
       <nav className="fixed top-0 left-0 right-0 z-[60] px-6 pt-6 pb-0 pointer-events-auto">
