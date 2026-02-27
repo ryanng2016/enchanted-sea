@@ -62,7 +62,7 @@ export default function RootLayout({
 
         {/* Bottom Glow + Water Waves */}
         <div className="pointer-events-none fixed inset-x-0 bottom-0 z-0 h-[300px] overflow-visible">
-          <div className="absolute inset-x-0 -bottom-12 h-[360px] bg-gradient-to-t from-blue-500/35 via-blue-500/15 to-transparent blur-2xl" />
+          <div className="absolute inset-x-0 -bottom-12 h-[360px] bg-linear-to-t from-blue-500/35 via-blue-500/15 to-transparent blur-2xl" />
           <div className="absolute inset-x-0 -bottom-12 h-[360px] wave-water wave-water--back opacity-35" />
           <div className="absolute inset-x-0 -bottom-12 h-[360px] wave-water wave-water--front opacity-55" />
         </div>
